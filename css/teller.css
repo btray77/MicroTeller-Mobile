@@ -1,0 +1,29 @@
+.idpic {    
+	width: 100px;    
+	text-align: center;    
+	margin-right: 0;    
+	margin-left: 0;
+}
+
+.idpic img {    
+	width: 100px;
+}
+
+.idbadge {    
+	width: 100px;    
+	text-align: center;    
+	margin-right: 0;    
+	margin-left: 0;
+}
+
+.idbadge img {    
+	width: 100px;
+}
+
+.checkinbtn {    
+	position: absolute;
+	top: 65%;
+	width:95%;
+	margin-right: 10px;    
+	margin-left: 10px;
+}

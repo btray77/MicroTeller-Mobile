@@ -1,0 +1,190 @@
+<!DOCTYPE html> 
+<html manifest="microteller.appcache"> 
+<head> 
+  <title>ToDo</title> 
+  <meta name="viewport" content="user-scalable=0, initial-scale=1.0, maximum-scale=1.0;">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png"> 
+  <link rel="stylesheet" href="css/jquery.mobile.theme.css" />
+  <link rel="stylesheet" href="css/jquery.mobile.css" />
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <link rel="stylesheet" href="css/teller.css" />
+  <script src="lib/jquery.js"></script>
+  <script src="lib/jquery.mobile.js"></script>
+  <script src="lib/iscroll.js"></script>
+  <script src="lib/leaflet.js"></script>
+  <script src="lib/app.js"></script>
+  <script src="cordova-2.2.0.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.1.15.min.js"></script>
+</head> 
+<body>
+    <div data-role="page" id="home_page" data-theme="a">      
+        <div data-role="header" data-theme="f">         
+           <img border="0" src="../www/img/banner.png"/>
+        </div><!-- /header -->    
+        	<div data-role="content">
+            <a id="lookup" data-role="button">Look Up Customer</a>
+			<a id="create" data-role="button">Create New Customer</a>
+			<a id="quicklook" data-role="button">Quick Look</a>
+			<a id="location" data-role="button">Location Check In</a>
+    		</div><!-- /content -->       
+        		<div data-role="footer" data-position="fixed" data-theme="f">
+				<img border="0" src="../www/img/footer.png"/>              
+        		</div><!-- /footer--> 
+    </div><!-- /First Page-->  
+    
+<!-- ------------------------------------------------------------------------------------- -->   
+
+    <div data-role="page" id="lookup_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">         
+        <div data-role="header" data-theme="a">   
+           <h1>Customer Search</h1>     
+        </div><!-- /header -->                
+        	<div data-role="content">  
+				<input type="text" name="searchnumber" id="searchnumber" value="" placeholder="Customer Number"/>
+				<button type="submit" id="search" data-theme="a">Search</button>
+    		</div><!-- /content -->       
+        		<div data-role="footer" data-position="fixed" data-theme="f">
+				<img border="0" src="../www/img/footer.png"/>              
+        		</div><!-- /footer-->     
+    </div><!-- /search_page -->
+
+
+    <div data-role="page" id="details_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">         
+        <div data-role="header" data-theme="a">  
+           <h1>Customer Details</h1>     
+        </div><!-- /header -->                
+        	<div data-role="content">  
+ 					<fieldset class="ui-grid-a">
+						<div class="ui-block-a">
+			 				<div class="idpic">
+								<img id="d_myImage" src=""></img>
+							</div> <!-- /idpic --> 
+						</div>	<!-- /ui-block-a --> 	
+						<div class="ui-block-b">		
+							<button type="submit" id="update" data-theme="a">update</button>
+							<!--<button type="submit" id="save" data-theme="a">Save</button> -->
+							<button type="submit" data-theme="a">Cancel</button>
+						</div><!-- /ui-block-b --> 
+					</fieldset>
+		        <input type="text" id="ex_customername" value="" placeholder="New Customer Name"/>
+				<input type="text" id="ex_customernumber" value="" placeholder="New Customer Number"/>
+				<input type="text" id="ex_customeramount" value="" placeholder="Amount Due"/>
+				<input type="text" id="ex_customerduedate" placeholder="Next Payment Date"</input>
+				<textarea name="ex_description" id="ex_description" placeholder="Description of Business"></textarea>
+    		</div><!-- /content -->       
+        		<div data-role="footer" data-position="fixed" data-theme="f">
+				<img border="0" src="../www/img/footer.png"/>              
+        		</div><!-- /footer-->     
+    </div><!-- /details_page -->
+
+<!-- ------------------------------------------------------------------------------------- -->  
+
+<div data-role="page" id="create_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">         
+    <div data-role="header" data-theme="a">  
+       <h1>Create New Customer</h1>     
+    </div><!-- /header -->                
+    	<div data-role="content"> 
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a">
+	 				<div class="idbadge">
+						<img id="myImage" src=""></img>
+					</div> <!-- /idpic --> 
+				</div>	<!-- /ui-block-a --> 	
+				<div class="ui-block-b">		
+					<button type="submit" id="takePicture" data-theme="a">Picture</button>
+					<button type="submit" id="save" data-theme="a">Save</button>
+					<button type="submit" data-theme="a">Cancel</button>
+				</div><!-- /ui-block-b --> 
+			</fieldset>
+        <input type="text" id="new_customername" value="" placeholder="New Customer Name"/>
+		<input type="text" id="new_customernumber" value="" placeholder="New Customer Number"/>
+		<input type="text" id="new_customeramount" value="" placeholder="Amount Due"/>	
+		<!--input type="text" id="new_customerduedate" value="" placeholder="Next Payment Date"/-->	
+		<fieldset data-role="controlgroup" data-type="horizontal">
+				<legend>Next Payment Date:</legend>
+
+				<label for="select-choice-month">Month</label>
+				<select name="select-choice-month" id="select-choice-month">
+					<option value="jan">Jan</option>
+					<option value="dec">Dec</option>
+					<option value="feb">Feb</option>
+					<option value="mar">Mar</option>
+					<option value="apr">Apr</option>
+					<option value="may">May</option>
+					<option value="jun">Jun</option>
+					<option value="jul">Jul</option>
+					<option value="aug">Aug</option>
+					<option value="sep">Sep</option>
+					<option value="oct">Oct</option>
+					<option value="nov">Nov</option>
+					<option value="dec">Dec</option>
+				</select>
+
+				<label for="select-choice-day">Day</label>
+				<select name="select-choice-day" id="select-choice-day">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">13</option>
+					<option value="13">14</option>
+					<option value="15">15</option>
+				</select>
+
+				<label for="select-choice-year">Year</label>
+				<select name="select-choice-year" id="select-choice-year">
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+				</select>
+			</fieldset>	
+		<textarea name="bus_description" id="textarea" placeholder="Description of Business"></textarea>
+	</div><!-- /content -->       
+		<div data-role="footer" data-position="fixed" data-theme="f">
+		<img border="0" src="../www/img/footer.png"/>              
+		</div><!-- /footer-->       
+</div><!-- /lookup_page -->
+
+<!-- ------------------------------------------------------------------------------------- -->  
+
+<div data-role="page" id="quicklook_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">         
+    <div data-role="header" data-theme="a">  
+       <h1>QuickLook</h1>     
+    </div><!-- /header -->                
+    	<div data-role="content">  
+        <p>Quick Look Page</p>
+    	</div><!-- /content -->                
+	</div><!-- /content -->       
+		<div data-role="footer" data-position="fixed" data-theme="f">
+		<img border="0" src="../www/img/footer.png"/>              
+		</div><!-- /footer-->      
+</div><!-- /create_page -->
+
+<!-- ------------------------------------------------------------------------------------- -->  
+
+<div data-role="page" id="location_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">             
+<div data-role="header" data-theme="a">  
+       <h1>Location Check In</h1>     
+    </div><!-- /header -->             
+        <div id="map">
+    	</div><!-- /map--> 
+   			<div class="checkinbtn">
+				<button type="submit" id="checkin" data-theme="a">Check In</button>
+			</div><!-- /checkinbutton --> 
+		</div><!-- /content -->       
+    		<div data-role="footer" data-position="fixed" data-theme="f">
+			<img border="0" src="../www/img/footer.png"/>              
+    		</div><!-- /footer-->         
+</div><!-- /location_page -->
+
+<body>
+</html>
