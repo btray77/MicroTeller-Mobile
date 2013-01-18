@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html manifest="microteller.appcache"> 
 <head> 
-  <title>ToDo</title> 
+  <title>MicroTeller</title> 
   <meta name="viewport" content="user-scalable=0, initial-scale=1.0, maximum-scale=1.0;">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png"> 
@@ -9,13 +9,14 @@
   <link rel="stylesheet" href="css/jquery.mobile.css" />
   <link rel="stylesheet" href="css/leaflet.css" />
   <link rel="stylesheet" href="css/teller.css" />
-  <script src="lib/jquery.js"></script>
-  <script src="lib/jquery.mobile.js"></script>
-  <script src="lib/iscroll.js"></script>
-  <script src="lib/leaflet.js"></script>
-  <script src="lib/app.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/iscroll.js"></script>
+  <script src="js/jquery.mobile.js"></script>
+  <script src="js/leaflet.js"></script>
+  <script src="js/app.js"></script>
   <script src="cordova-2.2.0.js"></script>
-  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.1.15.min.js"></script>
+  <script src="js/SMSComposer.js"></script>
+  <script src="js/parse-1.1.15.min.js"></script>
 </head> 
 <body>
     <div data-role="page" id="home_page" data-theme="a">      
@@ -26,7 +27,8 @@
             <a id="lookup" data-role="button">Look Up Customer</a>
 			<a id="create" data-role="button">Create New Customer</a>
 			<a id="quicklook" data-role="button">Quick Look</a>
-			<a id="location" data-role="button">Location Check In</a>
+			<a id="location" data-role="button">Location Check In</a>		
+			<a id="settings" data-icon="gear" data-role="button">Settings</a>
     		</div><!-- /content -->       
         		<div data-role="footer" data-position="fixed" data-theme="f">
 				<img border="0" src="../www/img/footer.png"/>              
@@ -37,9 +39,11 @@
 
     <div data-role="page" id="lookup_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">         
         <div data-role="header" data-theme="a">   
-           <h1>Customer Search</h1>     
+           <h1>Search</h1>     
         </div><!-- /header -->                
-        	<div data-role="content">  
+        	<div data-role="content">  <BR>
+			<BR>	
+			<BR>
 				<input type="text" name="searchnumber" id="searchnumber" value="" placeholder="Customer Number"/>
 				<button type="submit" id="search" data-theme="a">Search</button>
     		</div><!-- /content -->       
@@ -63,7 +67,7 @@
 						<div class="ui-block-b">		
 							<button type="submit" id="update" data-theme="a">update</button>
 							<!--<button type="submit" id="save" data-theme="a">Save</button> -->
-							<button type="submit" data-theme="a">Cancel</button>
+							<button type="submit" id="cancel_b" data-theme="a">Done</button>
 						</div><!-- /ui-block-b --> 
 					</fieldset>
 		        <input type="text" id="ex_customername" value="" placeholder="New Customer Name"/>
@@ -81,7 +85,7 @@
 
 <div data-role="page" id="create_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">         
     <div data-role="header" data-theme="a">  
-       <h1>Create New Customer</h1>     
+       <h1>New Customer</h1>     
     </div><!-- /header -->                
     	<div data-role="content"> 
 			<fieldset class="ui-grid-a">
@@ -93,7 +97,7 @@
 				<div class="ui-block-b">		
 					<button type="submit" id="takePicture" data-theme="a">Picture</button>
 					<button type="submit" id="save" data-theme="a">Save</button>
-					<button type="submit" data-theme="a">Cancel</button>
+					<button type="submit" id="cancel_a" data-theme="a">Done</button>
 				</div><!-- /ui-block-b --> 
 			</fieldset>
         <input type="text" id="new_customername" value="" placeholder="New Customer Name"/>
@@ -106,7 +110,6 @@
 				<label for="select-choice-month">Month</label>
 				<select name="select-choice-month" id="select-choice-month">
 					<option value="jan">Jan</option>
-					<option value="dec">Dec</option>
 					<option value="feb">Feb</option>
 					<option value="mar">Mar</option>
 					<option value="apr">Apr</option>
@@ -133,9 +136,26 @@
 					<option value="9">9</option>
 					<option value="10">10</option>
 					<option value="11">11</option>
-					<option value="12">13</option>
-					<option value="13">14</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
 					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>
+					<option value="25">25</option>
+					<option value="26">26</option>
+					<option value="27">27</option>
+					<option value="28">28</option>
+					<option value="29">29</option>
+					<option value="30">30</option>
+					<option value="31">31</option>
 				</select>
 
 				<label for="select-choice-year">Year</label>
@@ -160,8 +180,27 @@
     <div data-role="header" data-theme="a">  
        <h1>QuickLook</h1>     
     </div><!-- /header -->                
-    	<div data-role="content">  
+    	<div data-role="content"> 
         <p>Quick Look Page</p>
+	
+	
+			<div data-role="collapsible" data-theme="a" data-content-theme="a">
+		    <h3><div id='q_customername'></h3>
+		    <p>
+		  		Customer Number: <input type="text" id="q_customernumber" value=""/>
+				Amount Due: <input type="text" id="q_customeramount" value=""/></p>
+			</div>
+			
+			
+			<div data-role="collapsible" data-theme="a" data-content-theme="a">
+		    <h3><div id='q_customername_b'></h3>
+		    <p>
+		  		Customer Number: <input type="text" id="q_customernumber_b" value=""/>
+				Amount Due: <input type="text" id="q_customeramount_b" value=""/></p>
+			</div>
+			
+			
+			
     	</div><!-- /content -->                
 	</div><!-- /content -->       
 		<div data-role="footer" data-position="fixed" data-theme="f">
@@ -173,7 +212,8 @@
 
 <div data-role="page" id="location_page" data-add-back-btn="true" data-back-btn-text="Back" data-theme="a">             
 <div data-role="header" data-theme="a">  
-       <h1>Location Check In</h1>     
+       <h1>Check In</h1>
+		<!--a href="#options" data-icon="gear" class="ui-btn-right">Options</a> -->    
     </div><!-- /header -->             
         <div id="map">
     	</div><!-- /map--> 
@@ -185,6 +225,31 @@
 			<img border="0" src="../www/img/footer.png"/>              
     		</div><!-- /footer-->         
 </div><!-- /location_page -->
+
+<!-- ------------------------------------------------------------------------------------- -->  
+
+<div data-role="page" id="options" data-theme="a">         
+    <div data-role="header" data-theme="a">  
+       <h1>Settings</h1>     
+    </div><!-- /header -->                
+    	<div data-role="content">  
+        <p>Use this page to set the default agent name and SMS number to send your Geo Coordinates to for location Check In.</p>
+<BR>
+		<input type="text" name="save_agent" id="save_agent" value="" placeholder="Agent Name"/>
+		<input type="text" name="save_sms" id="save_sms" value="" placeholder="SMS Number"/>
+		<button type="submit" id="check_in_no" data-theme="a">Save</button>
+		<button type="submit" id="clear_cache" data-theme="a">Clear Cache</button>
+		<button type="submit" id="cancel_set" data-theme="a">Done</button>
+    	</div><!-- /content -->                
+	</div><!-- /content -->       
+		<div data-role="footer" data-position="fixed" data-theme="f">
+		<img border="0" src="../www/img/footer.png"/>              
+		</div><!-- /footer-->      
+</div><!-- /create_page -->
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+
 
 <body>
 </html>
